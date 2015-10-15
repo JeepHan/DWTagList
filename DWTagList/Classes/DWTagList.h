@@ -20,8 +20,10 @@ IB_DESIGNABLE
 
 @property (nonatomic) BOOL viewOnly;
 @property (nonatomic) BOOL showTagMenu;
+@property (nonatomic) BOOL selectable;    //default is YES.
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, strong) NSArray *textArray;
+@property (nonatomic, strong) NSArray *tagViewArray;
 @property (nonatomic, weak) id<DWTagListDelegate> tagDelegate;
 @property (nonatomic, strong) IBInspectable UIColor *highlightedBackgroundColor;
 @property (nonatomic) IBInspectable BOOL automaticResize;
@@ -35,6 +37,7 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *borderColor;
 @property (nonatomic, assign) IBInspectable CGFloat borderWidth;
 @property (nonatomic, strong) IBInspectable UIColor *textColor;
+@property (nonatomic, strong) IBInspectable UIColor *textHighlightColor;
 @property (nonatomic, strong) IBInspectable UIColor *textShadowColor;
 @property (nonatomic, assign) IBInspectable CGSize textShadowOffset;
 

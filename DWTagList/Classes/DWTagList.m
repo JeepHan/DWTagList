@@ -23,6 +23,8 @@
 #define HIGHLIGHTED_BACKGROUND_COLOR [UIColor colorWithRed:0.40 green:0.80 blue:1.00 alpha:0.5]
 #define DEFAULT_AUTOMATIC_RESIZE NO
 #define DEFAULT_SHOW_TAG_MENU NO
+#define TEXT_HIGHLIGHT_COLOR [UIColor whiteColor]
+#define DEFAULT_SELECTABLE YES
 
 @interface DWTagList () <DWTagViewDelegate>
 
@@ -66,6 +68,8 @@
     self.textShadowColor = TEXT_SHADOW_COLOR;
     self.textShadowOffset = TEXT_SHADOW_OFFSET;
     self.showTagMenu = DEFAULT_SHOW_TAG_MENU;
+    self.selectable = DEFAULT_SELECTABLE;
+    self.textHighlightColor = TEXT_HIGHLIGHT_COLOR;
 }
 
 - (void)setTags:(NSArray *)array
@@ -126,6 +130,7 @@
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
     
+    NSMutableArray *tagViewMutableArray = [NSMutableArray array];
     NSInteger tag = 0;
     for (id text in textArray) {
         DWTagView *tagView;
@@ -179,8 +184,10 @@
             [tagView.button addTarget:self action:@selector(touchDragExit:) forControlEvents:UIControlEventTouchDragExit];
             [tagView.button addTarget:self action:@selector(touchDragInside:) forControlEvents:UIControlEventTouchDragInside];
         }
+        
+        [tagViewMutableArray addObject:tagView];
     }
-    
+    _tagViewArray = [NSArray arrayWithArray:tagViewMutableArray];
     sizeFit = CGSizeMake(self.frame.size.width, previousFrame.origin.y + previousFrame.size.height + self.bottomMargin + 1.0f);
     self.contentSize = sizeFit;
 }
@@ -200,6 +207,8 @@
 {
     UIButton *button = (UIButton*)sender;
     [[button superview] setBackgroundColor:self.highlightedBackgroundColor];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    [tagView setTextColor:self.textColor];
 }
 
 - (void)touchUpInside:(id)sender
@@ -207,6 +216,7 @@
     UIButton *button = (UIButton*)sender;
     DWTagView *tagView = (DWTagView *)[button superview];
     [tagView setBackgroundColor:[self getBackgroundColor]];
+    [tagView setTextColor:self.textHighlightColor];
     
     if ([self.tagDelegate respondsToSelector:@selector(selectedTag:tagIndex:)]) {
         [self.tagDelegate selectedTag:tagView.label.text tagIndex:tagView.tag];
