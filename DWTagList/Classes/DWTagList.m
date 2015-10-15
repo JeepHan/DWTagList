@@ -208,7 +208,9 @@
     UIButton *button = (UIButton*)sender;
     [[button superview] setBackgroundColor:self.highlightedBackgroundColor];
     DWTagView *tagView = (DWTagView *)[button superview];
-    [tagView setTextColor:self.textColor];
+    if (!_selectable) {
+        [tagView setTextColor:self.textColor];
+    }
 }
 
 - (void)touchUpInside:(id)sender
