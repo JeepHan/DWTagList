@@ -208,9 +208,7 @@
     UIButton *button = (UIButton*)sender;
     [[button superview] setBackgroundColor:self.highlightedBackgroundColor];
     DWTagView *tagView = (DWTagView *)[button superview];
-    if (!_selectable) {
-        [tagView setTextColor:self.textColor];
-    }
+    [tagView setTextColor:self.textHighlightColor];
 }
 
 - (void)touchUpInside:(id)sender
@@ -218,7 +216,9 @@
     UIButton *button = (UIButton*)sender;
     DWTagView *tagView = (DWTagView *)[button superview];
     [tagView setBackgroundColor:[self getBackgroundColor]];
-    [tagView setTextColor:self.textHighlightColor];
+    if (!_selectable) {
+        [tagView setTextColor:self.textColor];
+    }
     
     if ([self.tagDelegate respondsToSelector:@selector(selectedTag:tagIndex:)]) {
         [self.tagDelegate selectedTag:tagView.label.text tagIndex:tagView.tag];
@@ -239,13 +239,21 @@
 - (void)touchDragExit:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    [[button superview] setBackgroundColor:[self getBackgroundColor]];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    [tagView setBackgroundColor:[self getBackgroundColor]];
+    if (!_selectable) {
+        [tagView setTextColor:self.textColor];
+    }
 }
 
 - (void)touchDragInside:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    [[button superview] setBackgroundColor:[self getBackgroundColor]];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    [tagView setBackgroundColor:[self getBackgroundColor]];
+    if (!_selectable) {
+        [tagView setTextColor:self.textColor];
+    }
 }
 
 - (UIColor *)getBackgroundColor

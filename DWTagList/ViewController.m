@@ -44,6 +44,7 @@
                         @"Tag Label 3",
                         @"Tag Label 4",
                         @"Long long long long long long Tag", nil];
+    _tagList.selectable = NO;
     [_tagList setTags:_array];
     [_tagList setTagDelegate:self];
 }
